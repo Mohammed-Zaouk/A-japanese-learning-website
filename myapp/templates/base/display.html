@@ -1,0 +1,39 @@
+{% extends 'base/father.html' %}
+{% block title %} Contents {% endblock %}
+{% block content %}
+<div class="container mt-4">
+    {% if request.user.is_authenticated %}
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Kanji</th>
+                    <th scope="col">Hiragana</th>
+                    <th scope="col">English</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if show %}
+                    {% for display in show %}
+                        <tr>
+                            <td><a href="{% url 'record' display.id %}">{{ display.id }}</a></td>
+                            <td>{{ display.kanji }}</td>
+                            <td>{{ display.hiragana }}</td>
+                            <td>{{ display.english }}</td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">No records found</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            You must be logged in to view this page.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

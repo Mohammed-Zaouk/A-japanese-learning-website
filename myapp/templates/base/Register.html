@@ -1,0 +1,108 @@
+{% extends 'base/father.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    {% if user.is_authenticated %}
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="alert alert-warning d-flex align-items-center shadow-lg border-0 rounded-lg" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" width="24" height="24" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </svg>
+                <div>
+                    <p class="mb-4">You are already registered and logged in. No need to register again. <a href="{% url 'home' %}">Return to Home?</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="row justify-content-center">
+        <div class="col-md-10 col-lg-8">
+            <div class="card shadow-lg border-0 rounded-lg">
+                <div class="card-header bg-primary text-white text-center py-4">
+                    <h2 class="mb-0">Create an Account</h2>
+                </div>
+                <div class="card-body p-4">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        {% if form.errors %}
+                            <div class="alert alert-danger" role="alert">
+                                <ul class="mb-0">
+                                    {% for field in form %}
+                                        {% for error in field.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+                        <div class="form-group mb-3">
+                            {{ form.username.label_tag }}
+                            {{ form.username }}
+                            <small class="form-text text-muted">{{ form.username.help_text }}</small>
+                        </div>
+                        <div class="form-group mb-3">
+                            {{ form.email.label_tag }}
+                            {{ form.email }}
+                        </div>
+                        <div class="form-group mb-3">
+                            {{ form.password1.label_tag }}
+                            {{ form.password1 }}
+                            <small class="form-text text-muted">{{ form.password1.help_text }}</small>
+                        </div>
+                        <div class="form-group mb-3">
+                            {{ form.password2.label_tag }}
+                            {{ form.password2 }}
+                        </div>
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Register</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    .container {
+        max-width: 800px;
+        margin-bottom: 50px;
+    }
+    .card-header h2 {
+        margin-bottom: 0;
+    }
+    .form-group {
+        margin-bottom: 1rem;
+    }
+    .form-control {
+        border-radius: 0.25rem;
+        padding: 0.75rem 1rem;
+        font-size: 1.1rem;
+    }
+    .form-text {
+        font-size: 0.875rem;
+        color: #6c757d;
+    }
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004085;
+    }
+    .btn-lg {
+        font-size: 1.25rem;
+        padding: 0.75rem 1.5rem;
+    }
+    .alert {
+        display: flex;
+        align-items: center;
+    }
+    .alert svg {
+        margin-right: 1rem;
+    }
+</style>
+{% endblock %}

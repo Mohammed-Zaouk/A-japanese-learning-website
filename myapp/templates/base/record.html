@@ -1,0 +1,21 @@
+{% extends 'base/father.html' %}
+{% block title %} Record {% endblock %}
+{% block content %}
+
+<p class="card-text">
+<strong>Kanji: </strong>{{ record.kanji }}</p>
+
+<p class="card-text">
+<strong>Hiragana: </strong>{{ record.hiragana }}</p>
+
+<p class="card-text">
+<strong>English: </strong>{{ record.english }}</p>
+
+<p class="card-text">
+<strong>ID: </strong>{{ record.id }}</p>
+
+<a href="{% url 'Display' %}" class="btn btn-secondary">Back</a>
+<a href="{% url 'delete' record.id %}" class="btn btn-danger">Delete</a>
+<a href="{% url 'update' record.id %}" class="btn btn-secondary">Update Record</a>
+
+{% endblock %}

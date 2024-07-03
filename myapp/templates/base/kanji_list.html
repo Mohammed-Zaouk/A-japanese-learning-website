@@ -1,0 +1,31 @@
+<!-- myapp/templates/base/kanji_list.html -->
+{% extends 'base/father.html' %}
+{% block title %}{{ level }} Kanji Table{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <h1 class="mb-4">Kanji for JLPT {{ level }}</h1>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Kanji</th>
+                <th scope="col">Hiragana</th>
+                <th scope="col">Meaning</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for kanji in kanji_list %}
+            <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>{{ kanji.japanese.0.word }}</td>
+                <td>{{ kanji.japanese.0.reading }}</td>
+                <td>{{ kanji.senses.0.english_definitions|join:", " }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

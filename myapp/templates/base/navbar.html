@@ -1,0 +1,126 @@
+<style>
+  .navbar-nav .nav-link {
+    position: relative;
+    color: white !important;
+    transition: color 0.3s;
+    padding: 10px; /* Custom padding for all nav links */
+  }
+
+  .navbar-nav .nav-link:not(.no-border)::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 100%;
+    height: 3px;
+    background-color: lightblue;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .navbar-nav .nav-link:not(.no-border):hover::after {
+    transform: scaleX(1);
+  }
+
+  .navbar-nav .nav-link.btn {
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+    padding: 10px 20px; /* Custom padding for buttons */
+  }
+
+  .navbar-nav .nav-link.btn:hover {
+    background-color: #28a745;
+    color: white;
+    border-color: #28a745;
+  }
+
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #343a40;
+    min-width: 10rem;
+    z-index: 1000;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
+    opacity: 0;
+    transition: opacity 0.5s ease, transform 0.5s ease;
+  }
+
+  .dropdown-menu.show {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .dropdown-item {
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .dropdown-item:hover {
+    background-color: #495057;
+  }
+
+  .dropdown:hover .dropdown-menu {
+    display: block;
+    transform: translateY(10px);
+  }
+</style>
+<nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'home' %}">Navbar</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active p-2" href="{% url 'home' %}">Home</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link p-2" href="{% url 'Display' %}">My Kanji</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link p-2" href="{% url 'Insert' %}">Add Kanji</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link p-2" href="{% url 'test' %}">A Test</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link p-2 dropdown-toggle no-border" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            JLPT Kanji
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="{% url 'kanji_list' level='N5' %}">N5</a></li>
+            <li><a class="dropdown-item" href="{% url 'kanji_list' level='N4' %}">N4</a></li>
+            <li><a class="dropdown-item" href="{% url 'kanji_list' level='N3' %}">N3</a></li>
+            <li><a class="dropdown-item" href="{% url 'kanji_list' level='N2' %}">N2</a></li>
+            <li><a class="dropdown-item" href="{% url 'kanji_list' level='N1' %}">N1</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link btn btn-outline-success btn-sm no-border p-2" href="{% url 'Logout_page' %}">Logout</a>
+        </li>
+      </ul>
+    </div>
+    {% else %}
+    </ul>
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link btn btn-outline-success btn-sm me-2 no-border p-2" href="{% url 'login_page' %}">Login</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link btn btn-outline-success btn-sm no-border p-2" href="{% url 'Register' %}">Register</a>
+        </li>
+      </ul>
+    </div>
+    {% endif %}
+  </div>
+</nav>

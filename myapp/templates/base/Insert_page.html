@@ -1,0 +1,115 @@
+{% extends 'base/father.html' %}
+{% block title %} Add contents {% endblock %}
+{% block content %}
+<div class="card-body p-4">
+    {% if not user.is_authenticated %}
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="alert alert-warning d-flex align-items-center shadow-lg border-0 rounded-lg" role="alert">
+                <svg xmlns="http://www.w3.org/2000/svg" class="bi bi-exclamation-triangle-fill flex-shrink-0 me-2" width="24" height="24" viewBox="0 0 16 16" role="img" aria-label="Warning:">
+                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </svg>
+                <div>
+                    <p class="mb-4">You need to login to use the Website. <a href="{% url 'login_page' %}">Would like to login?...</a> <a href="{% url 'Register' %}">Or you don't have an account?</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="row justify-content-center" style="max-width: 40%; margin: auto;">
+        <div class="container">
+            <h2 class="mb-4">Add New Word</h2>
+            <form id="wordForm" method="POST" action="{% url 'Insert' %}">
+                {% csrf_token %}
+                {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        <ul class="mb-0">
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                <div class="mb-3">
+                    {{ form.english.label_tag }}
+                    {{ form.english }}
+                    <small class="form-text text-muted">{{ form.english.help_text }}</small>
+                </div>
+                <div class="mb-3">
+                    {{ form.kanji.label_tag }}
+                    {{ form.kanji }}
+                    <small class="form-text text-muted">{{ form.kanji.help_text }}</small>
+                </div>
+                <div class="mb-3">
+                    {{ form.hiragana.label_tag }}
+                    {{ form.hiragana }}
+                    <small class="form-text text-muted">{{ form.hiragana.help_text }}</small>
+                </div>
+                <div class="d-grid mt-4">
+                    <button type="submit" class="btn btn-primary btn-lg">Add Word</button>
+                </div>
+            </form>
+            <ul id="wordItems" class="list-group mt-4">
+                <!-- Dynamically added words will appear here -->
+            </ul>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+{% block extra_scripts %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; cookies[i]; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    const csrftoken = getCookie('csrftoken');
+
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+    $(document).ready(function() {
+        $('#wordForm').on('submit', function(e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: $(this).attr('action'),
+                data: $(this).serialize(),
+                success: function(response) {
+                    if (response.error) {
+                        alert('Error: ' + response.error);
+                    } else {
+                        $('#wordItems').append(
+                            `<li class="list-group-item">${response.english} - ${response.kanji} - ${response.hiragana}</li>`
+                        );
+                        $('#wordForm')[0].reset();
+                    }
+                },
+                error: function(response) {
+                    alert('There was an error adding the word.');
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
+{% endblock %}
