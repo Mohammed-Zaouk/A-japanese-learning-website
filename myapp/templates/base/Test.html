@@ -1,5 +1,33 @@
 {% extends 'base/father.html' %}
-{% block title %} Test {% endblock %}
-{% block content %}
+{% block title %}Test{% endblock %}
 
+{% block content %}
+<div class="container">
+    <div class="option">
+        <div class="option-title" onclick="toggleOption(this)">Option 1</div>
+        <div class="option-content">
+            <p>This is additional information for Option 1.</p>
+            <button class="btn btn-primary">Button 1</button>
+        </div>
+    </div>
+    <div class="option">
+        <div class="option-title" onclick="toggleOption(this)">Option 2</div>
+        <div class="option-content">
+            <p>This is additional information for Option 2.</p>
+            <button class="btn btn-primary">Button 2</button>
+        </div>
+    </div>
+    <div class="option">
+        <div class="option-title" onclick="toggleOption(this)">Option 3</div>
+        <div class="option-content">
+            <p>This is additional information for Option 3.</p>
+            <button class="btn btn-primary">Button 3</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+{% load static %}
+<script src="{% static 'js/testJS.js' %}"></script>
 {% endblock %}

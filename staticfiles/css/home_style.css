@@ -1,0 +1,94 @@
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+* {
+    padding: 0;
+    margin: 0;
+    font: inherit;
+}
+html {
+    color-scheme: dark light;
+}
+img, picture, svg, video {
+    display: block;
+    max-width: 100%;
+}
+
+body {
+    background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
+    url("../images/pexels-sebastiaan9977-1097456.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+}
+
+.overlay{
+    color: white;
+}
+.hero-content{
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 20px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1;
+}
+
+.hero-content h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    
+}
+
+.hero-content p {
+    font-size: 1.2em;
+    margin-top: 0;
+}
+
+.hero-content button{
+    width: 16rem;
+    padding: 0.95rem 0;
+    text-align: center;
+    margin: 1.1rem 0.6rem;
+    border-radius: 1.3rem;
+    font-weight: bold;
+    border: 2px solid #009388;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+
+}
+.hero-content span{
+    background: #009388;
+    width: 0;
+    height: 100%;
+    border-radius: 1.3rem;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    transition: 0.5s;
+}
+button:hover span{
+    width: 100%;
+}
+button:hover{
+    border: none;
+}
+
+
+@media (max-width: 768px) {
+    .hero-section {
+        padding: 10px;
+    }
+    .hero-content h1 {
+        font-size: 2em;
+    }
+    .hero-content p {
+        font-size: 1em;
+    }
+}

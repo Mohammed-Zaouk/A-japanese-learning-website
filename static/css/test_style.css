@@ -1,0 +1,50 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+.option {
+    border-bottom: 1px solid #eee;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.option:last-child {
+    border-bottom: none;
+}
+
+.option-title {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #f1f1f1;
+    transition: background-color 0.3s;
+}
+
+.option-title:hover {
+    background-color: #ddd;
+}
+
+.option-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+    padding: 0 10px;
+    background-color: #fafafa;
+}
+
+.option.active .option-content {
+    padding: 10px;
+    max-height: 500px; /* Just a large value to ensure the content expands */
+}
